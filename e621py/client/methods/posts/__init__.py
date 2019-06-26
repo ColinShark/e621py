@@ -5,6 +5,7 @@ from .popular_by_day import PopularByDay
 from .popular_by_week import PopularByWeek
 from .popular_by_month import PopularByMonth
 from .show import Show
+from.create import Create
 
 
 class Posts(
@@ -14,6 +15,7 @@ class Posts(
     PopularByDay,
     PopularByWeek,
     PopularByMonth,
-    Show
+    Show,
+    Create
 ):
     pass
