@@ -52,13 +52,17 @@ class Create(BaseClient):
 
         `parent_id` (`int`):
             The ID of the parent post.
+
+        Returns
+        -------
+        JSON `object`
         """
         data = {
             # 'file': file,
             # 'post[upload_url]': file,
-            'post[tags]': tags,
+            # 'post[tags]': tags,
             'post[rating]': rating,
-            'post[source]': source,
+            # 'post[source]': source,
             'post[description]': description,
             'post[is_rating_locked]': is_rating_locked,
             'post[is_note_locked]': is_note_locked,
@@ -70,6 +74,14 @@ class Create(BaseClient):
         elif file.startswith("http"):
             data['post[upload_url]'] = file
 
+        if type(tags) is list:
+            tags = " ".join(tags)
+        data['post[tags]'] = tags
+
+        if type(source) is list:
+            source = "%0A".join(source)
+        date['post[source]'] = source
+
         data['login'] = self.username
         data['password_hash'] = self.password_hash
 
@@ -78,5 +90,4 @@ class Create(BaseClient):
             params=data,
             headers=HEADER
         )
-        print(r.url)
         return r.json()
