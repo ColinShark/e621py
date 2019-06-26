@@ -1,3 +1,4 @@
+from types import SimpleNamespace
 import requests
 
 from e621py import HEADER
@@ -71,4 +72,4 @@ class Index(BaseClient):
         )
         print(r.url)
         for item in r.json():
-            yield item
+            yield SimpleNamespace(**item)
