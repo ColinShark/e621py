@@ -23,8 +23,8 @@ class Client(Methods, BaseClient):
     """
     def __init__(
         self,
-        username: str,
-        password_hash: str,
+        username: str = None,
+        password_hash: str = None,
         safe: bool = False
     ):
         super().__init__()
