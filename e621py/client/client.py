@@ -28,6 +28,6 @@ class Client(Methods, BaseClient):
         safe: bool = False
     ):
         super().__init__()
-        self.USERNAME = username
-        self.PASSWORD_HASH = password_hash
+        self.username = username
+        self.password_hash = password_hash
         self.url = "https://e926.net" if safe is True else "https://e621.net"
