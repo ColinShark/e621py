@@ -1,25 +1,27 @@
 # e621py
 
-An API Wrapper for the [e621.net](https://e621.net) API.
+An API Wrapper for the [e621.net](https://e621.net)
+[API](https://e621.net/help/show/api).
 
 ## Usage
 
-For now there is only one functionality: Searching for posts.
+Currently there is full funcationality for `/posts/` endpoints. For some API
+calls authentication is required. To get an API Key, head to
+[your API Access page](https://e621.net/user/api_key) and enable it.
 
 ```python
-import e621py
-
-e6 = e621py.Client("username", "api_key")
-
-e6.index("shark", 1)
+>>> import e621py
+>>> e6 = e621py.Client()
+>>> for result in e6.index("shark", 2):
+...     print(result)
+{'id': 1914785, ...}
+{'id': 1914718, ...}
 ```
 
-This code snippet will yield a JSON object containing all information about the found images.
-
-## Future of this project
-
-I plan to make this a full API Wrapper for the e621 API.
+The above code snippet will yield JSON objects containing all information
+about the found posts. The example doesn't show all information for the sake
+of brevity.
 
 ## License
 
-There is no License yet, but the project is private anyway :D
+There is no License yet, but the repo is private anyway :D
