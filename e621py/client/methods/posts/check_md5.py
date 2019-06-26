@@ -18,9 +18,7 @@ class CheckMD5(BaseClient):
 
         Returns
         =======
-        `generator`
-            A generator that gives back the md5, whether a post exists and
-            the post_id
+        JSON `object`
         """
         data = {
             'md5': md5
@@ -34,5 +32,4 @@ class CheckMD5(BaseClient):
             params=data,
             headers=HEADER
         )
-        print(r.url)
         return r.json()
