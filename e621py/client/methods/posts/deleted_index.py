@@ -24,8 +24,7 @@ class DeletedIndex(BaseClient):
 
         Returns
         -------
-        `generator`
-            A generator object.
+        `generator` containing JSON objects
         """
         data = {
             'user_id': user_id,
@@ -39,6 +38,5 @@ class DeletedIndex(BaseClient):
             params=data,
             headers=HEADER
         )
-        print(r.url)
         for item in r.json():
             yield item
