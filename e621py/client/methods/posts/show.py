@@ -36,5 +36,4 @@ class Show(BaseClient):
             params=data,
             headers=HEADER
         )
-        print(r.url)
         return r.json()

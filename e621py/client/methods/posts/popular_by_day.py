@@ -28,6 +28,5 @@ class PopularByDay(BaseClient):
             params=data,
             headers=HEADER
         )
-        print(r.url)
         for item in r.json():
             yield item
