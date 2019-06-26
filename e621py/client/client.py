@@ -11,15 +11,15 @@ class Client(Methods, BaseClient):
 
     Parameters
     ----------
-        username : str
-            Your Username.
+    `username` (``str``):
+        Your Username.
 
-        password_hash : str
-            Your API key.
+    `password_hash` (``str``):
+        Your API key.
 
-        safe : bool
-            Whether or not to display NSFW content.
-            Defaults to False (show NSFW)
+    `safe` (``bool``):
+        Whether or not to display NSFW content.
+        Defaults to False (show NSFW)
     """
     def __init__(
         self,
