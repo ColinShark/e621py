@@ -1,21 +1,31 @@
-from .index import Index
 from .check_md5 import CheckMD5
+from .create import Create
 from .deleted_index import DeletedIndex
+from .destroy import Destroy
+from .flag import Flag
+from .index import Index
 from .popular_by_day import PopularByDay
-from .popular_by_week import PopularByWeek
 from .popular_by_month import PopularByMonth
+from .popular_by_week import PopularByWeek
 from .show import Show
-from.create import Create
+from .tags import Tags
+from .update import Update
+from .vote import Vote
 
 
 class Posts(
-    Index,
     CheckMD5,
+    Create,
     DeletedIndex,
+    Destroy,
+    Flag,
+    Index,
     PopularByDay,
-    PopularByWeek,
     PopularByMonth,
+    PopularByWeek,
     Show,
-    Create
+    Tags,
+    Update,
+    Vote
 ):
     pass
