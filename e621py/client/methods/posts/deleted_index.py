@@ -1,4 +1,5 @@
-from types import SimpleNamespace
+from typing import Generator
+
 import requests
 
 from e621py import HEADER
@@ -10,28 +11,28 @@ class DeletedIndex(BaseClient):
         self,
         user_id: int = None,
         page: int = None
-    ):
+    ) -> Generator:
         """Get the index of deleted posts.
 
         Parameters
-        ==========
-        user_id : int
+        ----------
+        `user_id` : `int`
             ID of the user to filter post uploads by
 
-        page : int
+        `page` : `int`
             The page number to return
 
         Returns
-        =======
-        generator
+        -------
+        `generator`
             A generator object.
         """
         data = {
             'user_id': user_id,
             'page': page
         }
-        data['login'] = self.USERNAME
-        data['password_hash'] = self.PASSWORD_HASH
+        data['login'] = self.username
+        data['password_hash'] = self.password_hash
 
         r = requests.get(
             url=self.url + '/post/deleted_index.json',
@@ -40,4 +41,4 @@ class DeletedIndex(BaseClient):
         )
         print(r.url)
         for item in r.json():
-            yield SimpleNamespace(**item)
+            yield item

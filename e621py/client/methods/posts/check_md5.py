@@ -1,4 +1,3 @@
-from types import SimpleNamespace
 import requests
 
 from e621py import HEADER
@@ -9,17 +8,17 @@ class CheckMD5(BaseClient):
     def check_md5(
         self,
         md5: str
-    ) -> list:
+    ) -> dict:
         """Check the md5 hash of a post
 
         Parameters
         ==========
-        md5 :str
+        `md5` :`str`
             The md5 hash of a file to match
 
         Returns
         =======
-        generator
+        `generator`
             A generator that gives back the md5, whether a post exists and
             the post_id
         """
@@ -27,8 +26,8 @@ class CheckMD5(BaseClient):
             'md5': md5
         }
 
-        data['login'] = self.USERNAME
-        data['password_hash'] = self.PASSWORD_HASH
+        data['login'] = self.username
+        data['password_hash'] = self.password_hash
 
         r = requests.get(
             url=self.url + '/post/check_md5.json',
@@ -36,4 +35,4 @@ class CheckMD5(BaseClient):
             headers=HEADER
         )
         print(r.url)
-        return SimpleNamespace(**r.json())
+        return r.json()

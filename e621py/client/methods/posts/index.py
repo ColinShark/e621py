@@ -1,4 +1,5 @@
-from types import SimpleNamespace
+from typing import Generator
+
 import requests
 
 from e621py import HEADER
@@ -13,7 +14,7 @@ class Index(BaseClient):
         before_id: int = None,
         page: int = None,
         typed_tags: bool = False
-    ) -> list:
+    ) -> Generator:
         """The base URL is /post/index.json. Deleted posts are not returned.
         The most efficient method to iterate a large number of posts is to
         use before_id starting at the highest ID, and then successively
@@ -24,33 +25,32 @@ class Index(BaseClient):
 
         Parameters
         ==========
-            tags : str
+            `tags` : `str`
                 The tag search query. Any tag combination that works on the
                 website will work here.
 
-            limit : int, optional
+            `limit` : `int`, optional
                 How many posts you want to retrieve. There is a hard limit of
                 320 posts per request. Defaults to the value set in user
                 preferences.
 
-            before_id : int, optional
+            `before_id` : `int`, optional
                 Returns the next [limit] posts with IDs lower than the given
                 ID.
 
-            page : int, optional
+            `page` : `int`, optional
                 Paginates the search query into pages of length [limit] and
                 returns the given page. If before_id is supplied, this does
                 nothing.
 
-            typed_tags : bool, optional
+            `typed_tags` : `bool`, optional
                 Set to true to return typed tag information. The tags value
                 returned is a dictionary with each tag type as a key and then
                 a list of tags of that type.
 
         Returns
         =======
-        list
-            A list of results.
+        `generator` - A generator object containing all results.
         """
         data = {
             'tags': tags,
@@ -59,8 +59,8 @@ class Index(BaseClient):
             'page': page
         }
 
-        data['login'] = self.USERNAME
-        data['password_hash'] = self.PASSWORD_HASH
+        data['login'] = self.username
+        data['password_hash'] = self.password_hash
 
         if typed_tags is True:
             data['typed_tags'] = True
@@ -72,4 +72,4 @@ class Index(BaseClient):
         )
         print(r.url)
         for item in r.json():
-            yield SimpleNamespace(**item)
+            yield item
