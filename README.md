@@ -25,4 +25,4 @@ of brevity.
 
 ## License
 
-There is no License yet, but the repo is private anyway :D
+[GNU General Public License v3.0](LICENSE)
