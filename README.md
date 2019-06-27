@@ -1,7 +1,8 @@
 # e621py
 
-An API Wrapper for the [e621.net](https://e621.net)
-[API](https://e621.net/help/show/api).
+<img src="https://i.imgur.com/BIIQQRI.png" width="250" align="right" alt="e621 mascot, Esix">
+
+<big>An API Wrapper for the [e621.net](https://e621.net) [API](https://e621.net/help/show/api).</big>
 
 ## Usage
 
