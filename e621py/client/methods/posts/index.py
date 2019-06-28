@@ -9,7 +9,7 @@ from e621py.client.ext import BaseClient
 class Index(BaseClient):
     def index(
         self,
-        tags: str,
+        tags: str = None,
         limit: int = None,
         before_id: int = None,
         page: int = None,
@@ -68,7 +68,7 @@ class Index(BaseClient):
         r = requests.get(
             url=self.url + '/post/index.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         for item in r.json():
             yield item
