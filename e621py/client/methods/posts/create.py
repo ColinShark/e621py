@@ -27,7 +27,8 @@ class Create(BaseClient):
         Parameters
         ----------
         `file` (`str`):
-            Either a filepath or a URL to the source file.
+            URL to the source file. e621 will download it, if it is a
+            whitelisted URL.
 
         `tags` (`str` | `list`):
             Either a space-delimited list as a string or a list of strings for
@@ -58,21 +59,13 @@ class Create(BaseClient):
         JSON `object`
         """
         data = {
-            # 'file': file,
-            # 'post[upload_url]': file,
-            # 'post[tags]': tags,
+            'post[upload_url]': file,
             'post[rating]': rating,
-            # 'post[source]': source,
             'post[description]': description,
             'post[is_rating_locked]': is_rating_locked,
             'post[is_note_locked]': is_note_locked,
             'post[parent_id]': parent_id
         }
-
-        if os.path.exists(file):
-            data['post[file]'] = file
-        elif file.startswith("http"):
-            data['post[upload_url]'] = file
 
         if type(tags) is list:
             tags = " ".join(tags)
@@ -80,11 +73,12 @@ class Create(BaseClient):
 
         if type(source) is list:
             source = "%0A".join(source)
-        date['post[source]'] = source
+        data['post[source]'] = source
 
         data['login'] = self.username
         data['password_hash'] = self.password_hash
 
+        data['post[upload_url]'] = file
         r = requests.post(
             url=self.url + '/post/create.json',
             params=data,
