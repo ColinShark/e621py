@@ -1,10 +1,9 @@
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class Flag(BaseClient):
+class Flag(EsixClient):
     def flag(
         self,
         post_id: int,
@@ -40,6 +39,6 @@ class Flag(BaseClient):
         r = requests.post(
             url=self.url + '/post/flag.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         return r.json()

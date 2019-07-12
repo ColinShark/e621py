@@ -2,13 +2,12 @@ from typing import Generator
 
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class PopularByMonth(BaseClient):
-    def popular_by_month(self):
-        """Get popular posts of the recent month.
+class PopularByWeek(EsixClient):
+    def popular_by_week(self):
+        """Get popular posts of the recent week.
 
         Parameters
         ----------
@@ -17,16 +16,16 @@ class PopularByMonth(BaseClient):
         Returns
         -------
         `generator` - A generator containing the most popular posts of the
-        recent month.
+        recent week.
         """
         data = {}
         data['login'] = self.username
         data['password_hash'] = self.password_hash
 
         r = requests.get(
-            url=self.url + '/post/popular_by_month.json',
+            url=self.url + '/post/popular_by_week.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         for item in r.json():
             yield item

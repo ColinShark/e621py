@@ -1,10 +1,10 @@
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
+from e621py.esix.ext.utils import api_get
 
 
-class CheckMD5(BaseClient):
+class CheckMD5(EsixClient):
     def check_md5(
         self,
         md5: str
@@ -27,9 +27,7 @@ class CheckMD5(BaseClient):
         data['login'] = self.username
         data['password_hash'] = self.password_hash
 
-        r = requests.get(
+        return api_get(
             url=self.url + '/post/check_md5.json',
-            params=data,
-            headers=HEADER
-        )
-        return r.json()
+            data=[data, self.HEADER]
+        ).json()

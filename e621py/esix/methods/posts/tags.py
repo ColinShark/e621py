@@ -1,10 +1,9 @@
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class Tags(BaseClient):
+class Tags(EsixClient):
     def tags(
         self,
         post_id: int = None,
@@ -35,6 +34,6 @@ class Tags(BaseClient):
         r = requests.get(
             url=self.url + '/post/tags.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         return r.json()

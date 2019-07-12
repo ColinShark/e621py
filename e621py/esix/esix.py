@@ -1,12 +1,12 @@
 import logging
 
-from .ext import BaseClient
+from .ext import EsixClient
 from .methods import Methods
 
 log = logging.getLogger(__name__)
 
 
-class Client(Methods, BaseClient):
+class Esix(Methods, EsixClient):
     """e621py Client.
 
     Parameters

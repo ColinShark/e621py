@@ -1,24 +1,23 @@
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class Vote(BaseClient):
-    def vote(
+class RevertTags(EsixClient):
+    def revert_tags(
         self,
         post_id: int,
-        score: int
+        history_id: int
     ) -> object:
-        """Vote for a post. You can vote once per post per IP address.
+        """Revert a post's tags to previous version
 
         Parameters
         ----------
         `post_id` (`int`):
-            ID of the post that is voted on.
+            ID of the post.
 
-        `score` (`int`):
-            Upvote with `1`, downvote with `-1`.
+        `history_id` (`int`):
+            Version number to revert the tags to.
 
         Returns
         -------
@@ -26,15 +25,15 @@ class Vote(BaseClient):
         """
         data = {
             'id': post_id,
-            'score': score
+            'history_id': history_id
         }
 
         data['login'] = self.username
         data['password_hash'] = self.password_hash
 
         r = requests.post(
-            url=self.url + '/post/vote.json',
+            url=self.url + '/post/revert_tags.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         return r.json()

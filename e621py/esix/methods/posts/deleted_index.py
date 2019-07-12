@@ -2,11 +2,10 @@ from typing import Generator
 
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class DeletedIndex(BaseClient):
+class DeletedIndex(EsixClient):
     def deleted_index(
         self,
         user_id: int = None,
@@ -36,7 +35,7 @@ class DeletedIndex(BaseClient):
         r = requests.get(
             url=self.url + '/post/deleted_index.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         for item in r.json():
             yield item

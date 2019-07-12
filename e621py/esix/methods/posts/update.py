@@ -1,38 +1,39 @@
 from typing import Union
-import os
 
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class Create(BaseClient):
-    def create(
+class Update(EsixClient):
+    def update(
         self,
-        file: str,
-        tags: Union[str, list],
-        rating: str,
-        source: Union[str, list],
+        post_id: int,
+        tags: Union[str, list] = None,
+        old_tags: Union[str, list] = None,
+        rating: str = None,
+        source: Union[str, list] = None,
         description: str = None,
         is_rating_locked: bool = None,
         is_note_locked: bool = None,
-        parent_id: int = None
+        parent_id: int = None,
+        reason: str = None
     ) -> object:
-        """Create a new post. There are only four mandatory fields: you need
-        to supply the tags, and you need to supply the file, either through a
-        multipart form or through a source URL. A source, even if blank, and
-        a rating are also required.
+        """Update the information of a post.
 
         Parameters
         ----------
-        `file` (`str`):
-            URL to the source file. e621 will download it, if it is a
-            whitelisted URL.
+        post_id (int):
+            ID of the post that is to be updated.
 
         `tags` (`str` | `list`):
-            Either a space-delimited list as a string or a list of strings for
-            the tags.
+            The new tags.
+            Either a space delimited list as string or a list of strings.
+
+        `old_tags` (`str` | `list`):
+            The old tags. This helps e621 handling simultaneous edits from
+            multiple users. Either space delimited list as string of list of
+            strings.
 
         `rating` (`str`):
             The rating. Can be `s`, `q` or `e` for safe, questionable and
@@ -54,34 +55,32 @@ class Create(BaseClient):
         `parent_id` (`int`):
             The ID of the parent post.
 
+        `reason` (`str`):
+            The reason for the edit.
+
         Returns
         -------
         JSON `object`
         """
         data = {
-            'post[upload_url]': file,
+            'id': post_id,
+            'post[tags]': tags,
+            'post[old_tags]': old_tags,
             'post[rating]': rating,
+            'post[source]': source,
             'post[description]': description,
             'post[is_rating_locked]': is_rating_locked,
             'post[is_note_locked]': is_note_locked,
-            'post[parent_id]': parent_id
+            'post[parent_id]': parent_id,
+            'reason': reason
         }
-
-        if type(tags) is list:
-            tags = " ".join(tags)
-        data['post[tags]'] = tags
-
-        if type(source) is list:
-            source = "%0A".join(source)
-        data['post[source]'] = source
 
         data['login'] = self.username
         data['password_hash'] = self.password_hash
 
-        data['post[upload_url]'] = file
         r = requests.post(
-            url=self.url + '/post/create.json',
+            url=self.url + '/post/update.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         return r.json()

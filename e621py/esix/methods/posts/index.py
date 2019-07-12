@@ -2,11 +2,10 @@ from typing import Generator
 
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class Index(BaseClient):
+class Index(EsixClient):
     def index(
         self,
         tags: str = None,
@@ -70,5 +69,6 @@ class Index(BaseClient):
             params=data,
             headers=self.HEADER
         )
+        print(r.url)
         for item in r.json():
             yield item

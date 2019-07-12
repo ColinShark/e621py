@@ -1,10 +1,9 @@
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class Destroy(BaseClient):
+class Destroy(EsixClient):
     def destroy(
         self,
         post_id: int,
@@ -45,6 +44,6 @@ class Destroy(BaseClient):
         r = requests.post(
             url=self.url + '/post/destroy.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         return r.json()

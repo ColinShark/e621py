@@ -2,31 +2,30 @@ from typing import Generator
 
 import requests
 
-from e621py import HEADER
-from e621py.client.ext import BaseClient
+from e621py.esix.ext import EsixClient
 
 
-class PopularByDay(BaseClient):
-    def popular_by_day(self) -> Generator:
-        """Get popular posts of the recent day.
+class PopularByMonth(EsixClient):
+    def popular_by_month(self):
+        """Get popular posts of the recent month.
 
         Parameters
         ----------
-        No Parameters required.
+        No parameters required.
 
         Returns
         -------
         `generator` - A generator containing the most popular posts of the
-        recent day.
+        recent month.
         """
         data = {}
         data['login'] = self.username
         data['password_hash'] = self.password_hash
 
         r = requests.get(
-            url=self.url + '/post/popular_by_day.json',
+            url=self.url + '/post/popular_by_month.json',
             params=data,
-            headers=HEADER
+            headers=self.HEADER
         )
         for item in r.json():
             yield item
